@@ -3,21 +3,21 @@ import ecs100.*;
  * Support class for Orders
  *
  * @author Harry Booth-Beach
- * @version 31/08/2021
+ * @version 2/09/2021
  */
 public class Food
 {
     // fields
-    private int id;
+    private int foodId;
     private String foodName;
     private double price;
     
     /**
      * Constructor for objects of class Food
      */
-    public Food(int id, String fdnm, double prce)
+    public Food(int fdId, String fdnm, double prce)
     {
-        this.id = id;
+        this.foodId = fdId;
         this.foodName = fdnm;
         this.price = prce;
     }
@@ -27,9 +27,9 @@ public class Food
      * 
      * @return id
      */
-    public int getId()
+    public int getFoodId()
     {
-        return this.id;
+        return this.foodId;
     }
     
     /**
