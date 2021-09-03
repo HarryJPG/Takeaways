@@ -18,7 +18,7 @@ public class Orders
     {
         // initialise instance variables
         foodMap = new HashMap<Integer, Food>();
-        
+        ordersMap = new HashMap<Integer, Food>();
         // Create food
         Food f1 = new Food(1, "cheese burger", 15.00);
         Food f2 = new Food(2, "big mac", 20.00);
@@ -30,6 +30,11 @@ public class Orders
         foodMap.put(2, f2);
         foodMap.put(3, f3);
         foodMap.put(4, f4);
+        
+    }
+    
+    public void addFood(String foodName, int quantity)
+    {
         
     }
 }
