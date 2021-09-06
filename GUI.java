@@ -19,7 +19,26 @@ public class GUI
         // initialise instance variables
         od = new Orders();
         UI.initialise();
-        UI.addTextField("Name", this::);
+        menu();
     }
     
+    /**
+     * Create dropdown menus
+     */
+    public void menu()
+    {
+        double boxX = 0;
+        double boxY = 0;
+        double boxHeight = 30;
+        double boxWidth = 50;
+        UI.drawRect(boxX, boxY, boxHeight, boxWidth);
+    }
+    
+    /**
+     * Add food to orders
+     */
+    public void addFood()
+    {
+        
+    }
 }
