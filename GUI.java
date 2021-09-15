@@ -44,11 +44,20 @@ public class GUI
      */
     public void ddmFood()
     {
-        for (int i = 1; i <= 4; i++)
+        if (foodMenuOpen == false)
         {
+            for (int i = 1; i <= 4; i++)
+            {
+                UI.setColor(Color.black);
+                UI.drawRect(BOX_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
+                foodMenuOpen = true;
+            }
+        }
+        else
+        {
+            UI.setColor(Color.white);
+            UI.fillRect(BOX_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
             UI.setColor(Color.black);
-            UI.drawRect(BOX_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
-            foodMenuOpen = true;
         }
     }
     
@@ -82,7 +91,7 @@ public class GUI
     public void hide()
     {
         UI.setColor(Color.white);
-        UI.fillRect(BOX_X, BOX_Y + BOX_HEIGHT, BOX_WIDTH, BOX_HEIGHT*4);
+        UI.fillRect(BOX_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
         UI.setColor(Color.black);
     }
     
