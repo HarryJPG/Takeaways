@@ -19,6 +19,8 @@ public class GUI
     static final double BOX2_X = BOX1_X + BOX_WIDTH + 20;
     static final double BOX3_X = BOX1_X + 2*BOX_WIDTH + 40;
     static final double BOX_Y = 20;
+    static final double TEXT_X = 40;
+    static final double TEXT_Y = BOX_Y + 25;
     /**
      * Constructor for objects of class GUI
      */
@@ -37,8 +39,11 @@ public class GUI
     public void menu()
     {
         UI.drawRect(BOX1_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
+        UI.drawString("Food", TEXT_X + BOX1_X, TEXT_Y);
         UI.drawRect(BOX2_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
+        UI.drawString("Sides", TEXT_X + BOX2_X, TEXT_Y);
         UI.drawRect(BOX3_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
+        UI.drawString("Drinks", TEXT_X + BOX3_X, TEXT_Y);
     }
     
     /**
