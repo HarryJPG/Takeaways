@@ -13,10 +13,12 @@ public class GUI
     private boolean foodMenuOpen = false;
     private boolean sidesMenuOpen = false;
     private boolean drinksMenuOpen = false;
-    static final double BOX_X = 50;
-    static final double BOX_Y = 20;
     static final double BOX_WIDTH = 120;
     static final double BOX_HEIGHT = 40;
+    static final double BOX1_X = 50;
+    static final double BOX2_X = BOX1_X + BOX_WIDTH + 20;
+    static final double BOX3_X = BOX1_X + 2*BOX_WIDTH + 40;
+    static final double BOX_Y = 20;
     /**
      * Constructor for objects of class GUI
      */
@@ -34,9 +36,9 @@ public class GUI
      */
     public void menu()
     {
-        UI.drawRect(BOX_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
-        UI.drawRect(BOX_X + BOX_WIDTH + 20, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
-        UI.drawRect(BOX_X + 2*BOX_WIDTH + 40, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
+        UI.drawRect(BOX1_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
+        UI.drawRect(BOX2_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
+        UI.drawRect(BOX3_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
     }
     
     /**
@@ -49,15 +51,16 @@ public class GUI
             for (int i = 1; i <= 4; i++)
             {
                 UI.setColor(Color.black);
-                UI.drawRect(BOX_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
-                foodMenuOpen = true;
+                UI.drawRect(BOX1_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
             }
+            foodMenuOpen = true;
         }
         else
         {
             UI.setColor(Color.white);
-            UI.fillRect(BOX_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
+            UI.fillRect(BOX1_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
             UI.setColor(Color.black);
+            foodMenuOpen = false;
         }
     }
     
@@ -66,10 +69,21 @@ public class GUI
      */
     public void ddmSides()
     {
-        for (int i = 1; i <= 4; i++)
+        if (sidesMenuOpen == false)
         {
+            for (int i = 1; i <= 4; i++)
+            {
+                UI.setColor(Color.black);
+                UI.drawRect(BOX2_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
+            }
+            sidesMenuOpen = true;
+        }
+        else
+        {
+            UI.setColor(Color.white);
+            UI.fillRect(BOX2_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
             UI.setColor(Color.black);
-            UI.drawRect(BOX_X + BOX_WIDTH + 20, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
+            sidesMenuOpen = false;
         }
     }
     
@@ -78,21 +92,22 @@ public class GUI
      */
     public void ddmDrinks()
     {
-        for (int i = 1; i <= 4; i++)
+        if (drinksMenuOpen == false)
         {
-            UI.setColor(Color.black);
-            UI.drawRect(BOX_X + 2*BOX_WIDTH + 40, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
+            for (int i = 1; i <= 4; i++)
+            {
+                UI.setColor(Color.black);
+                UI.drawRect(BOX3_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
+            }
+            drinksMenuOpen = true;
         }
-    }
-    
-    /**
-     * Hide dropdown menu
-     */
-    public void hide()
-    {
-        UI.setColor(Color.white);
-        UI.fillRect(BOX_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
-        UI.setColor(Color.black);
+        else
+        {
+            UI.setColor(Color.white);
+            UI.fillRect(BOX3_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
+            UI.setColor(Color.black);
+            drinksMenuOpen = false;
+        }
     }
     
     /**
@@ -102,18 +117,26 @@ public class GUI
     {
         if (action.equals("clicked"))
             {
-                if ((x >= BOX_X) &&
-                    (x <= BOX_X + BOX_WIDTH) &&
+                if ((x >= BOX1_X) &&
+                    (x <= BOX1_X + BOX_WIDTH) &&
                     (y >= BOX_Y) &&
                     (y <= BOX_Y + BOX_HEIGHT))
                 {
-                    if (foodMenuOpen == false)
-                        ddmFood();
-                    else
-                    {    
-                        foodMenuOpen = false;
-                        hide();
-                    }
+                    ddmFood();
+                }
+                else if ((x >= BOX2_X) &&
+                    (x <= BOX2_X + BOX_WIDTH) &&
+                    (y >= BOX_Y) &&
+                    (y <= BOX_Y + BOX_HEIGHT))
+                {
+                    ddmSides();
+                }
+                else if ((x >= BOX3_X) &&
+                    (x <= BOX3_X + BOX_WIDTH) &&
+                    (y >= BOX_Y) &&
+                    (y <= BOX_Y + BOX_HEIGHT))
+                {
+                    ddmDrinks();
                 }
             }
     }
