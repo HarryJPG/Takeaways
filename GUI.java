@@ -19,7 +19,8 @@ public class GUI
     static final double BOX2_X = BOX1_X + BOX_WIDTH + 20;
     static final double BOX3_X = BOX1_X + 2*BOX_WIDTH + 40;
     static final double BOX_Y = 20;
-    static final double TEXT_X = 40;
+    static final double TEXT1_X = 40;
+    static final double TEXT2_X = 5;
     static final double TEXT_Y = BOX_Y + 25;
     /**
      * Constructor for objects of class GUI
@@ -39,11 +40,11 @@ public class GUI
     public void menu()
     {
         UI.drawRect(BOX1_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
-        UI.drawString("Food", TEXT_X + BOX1_X, TEXT_Y);
+        UI.drawString("Food", TEXT1_X + BOX1_X, TEXT_Y);
         UI.drawRect(BOX2_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
-        UI.drawString("Sides", TEXT_X + BOX2_X, TEXT_Y);
+        UI.drawString("Sides", TEXT1_X + BOX2_X, TEXT_Y);
         UI.drawRect(BOX3_X, BOX_Y, BOX_WIDTH, BOX_HEIGHT);
-        UI.drawString("Drinks", TEXT_X + BOX3_X, TEXT_Y);
+        UI.drawString("Drinks", TEXT1_X + BOX3_X, TEXT_Y);
     }
     
     /**
@@ -57,6 +58,8 @@ public class GUI
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX1_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
+                fd = od.returnFood(i);
+                UI.drawString(fd.getFoodName(), TEXT2_X + BOX1_X, TEXT_Y + BOX_HEIGHT*i);
             }
             foodMenuOpen = true;
         }
@@ -80,6 +83,8 @@ public class GUI
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX2_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
+                fd = od.returnFood(i+4);
+                UI.drawString(fd.getFoodName(), TEXT2_X + BOX2_X, TEXT_Y + BOX_HEIGHT*i);
             }
             sidesMenuOpen = true;
         }
@@ -103,6 +108,8 @@ public class GUI
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX3_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
+                fd = od.returnFood(i+8);
+                UI.drawString(fd.getFoodName(), TEXT2_X + BOX3_X, TEXT_Y + BOX_HEIGHT*i);
             }
             drinksMenuOpen = true;
         }
@@ -142,6 +149,16 @@ public class GUI
                     (y <= BOX_Y + BOX_HEIGHT))
                 {
                     ddmDrinks();
+                }
+                
+                for (int i = 1; i <= 4; i++)
+                {
+                    if ((x >= BOX1_X) &&
+                        (x <= BOX1_X + BOX_WIDTH) &&
+                        (y >= BOX_Y + BOX_HEIGHT) &&
+                        (y <= BOX_Y + 2*BOX_HEIGHT*i))
+                    {
+                    }
                 }
             }
     }
