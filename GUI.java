@@ -4,7 +4,7 @@ import java.awt.Color;
  * GUI for takeaways orders
  *
  * @author Harry Booth-Beach
- * @version 3/09/2021
+ * @version 19/10/2021
  */
 public class GUI
 {
@@ -30,6 +30,7 @@ public class GUI
         // initialise instance variables
         od = new Orders();
         UI.initialise();
+
         UI.setMouseListener(this::doMouse);
         menu();
     }
@@ -58,7 +59,7 @@ public class GUI
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX1_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
-                fd = od.returnFood(i);
+                fd = od.getFood(i);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX1_X, TEXT_Y + BOX_HEIGHT*i);
             }
             foodMenuOpen = true;
@@ -83,7 +84,7 @@ public class GUI
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX2_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
-                fd = od.returnFood(i+4);
+                fd = od.getFood(i+4);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX2_X, TEXT_Y + BOX_HEIGHT*i);
             }
             sidesMenuOpen = true;
@@ -108,7 +109,7 @@ public class GUI
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX3_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
-                fd = od.returnFood(i+8);
+                fd = od.getFood(i+8);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX3_X, TEXT_Y + BOX_HEIGHT*i);
             }
             drinksMenuOpen = true;
@@ -129,6 +130,7 @@ public class GUI
     {
         if (action.equals("clicked"))
             {
+                // open or close drop down menus
                 if ((x >= BOX1_X) &&
                     (x <= BOX1_X + BOX_WIDTH) &&
                     (y >= BOX_Y) &&
@@ -151,13 +153,61 @@ public class GUI
                     ddmDrinks();
                 }
                 
+                // add clicked food to list
                 for (int i = 1; i <= 4; i++)
                 {
                     if ((x >= BOX1_X) &&
                         (x <= BOX1_X + BOX_WIDTH) &&
                         (y >= BOX_Y + BOX_HEIGHT) &&
-                        (y <= BOX_Y + 2*BOX_HEIGHT*i))
+                        (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
                     {
+                        fd = od.getFood(i);
+                        int quantity = UI.askInt("How many " + fd.getFoodName() + "? ");
+                        while (quantity != 0)
+                        {
+                            quantity--;
+                            od.addFood(fd);
+                            UI.println(fd.getFoodName());
+                        }
+                        break;
+                    }
+                }
+                
+                for (int i = 1; i <= 4; i++)
+                {
+                    if ((x >= BOX2_X) &&
+                        (x <= BOX2_X + BOX_WIDTH) &&
+                        (y >= BOX_Y + BOX_HEIGHT) &&
+                        (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
+                    {
+                        fd = od.getFood(i+4);
+                        int quantity = UI.askInt("How many " + fd.getFoodName() + "? ");
+                        while (quantity != 0)
+                        {
+                            quantity--;
+                            od.addFood(fd);
+                            UI.println(fd.getFoodName());
+                        }
+                        break;
+                    }
+                }
+                
+                for (int i = 1; i <= 4; i++)
+                {
+                    if ((x >= BOX3_X) &&
+                        (x <= BOX3_X + BOX_WIDTH) &&
+                        (y >= BOX_Y + BOX_HEIGHT) &&
+                        (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
+                    {
+                        fd = od.getFood(i+8);
+                        int quantity = UI.askInt("How many " + fd.getFoodName() + "? ");
+                        while (quantity != 0)
+                        {
+                            quantity--;
+                            od.addFood(fd);
+                            UI.println(fd.getFoodName());
+                        }
+                        break;
                     }
                 }
             }

@@ -4,14 +4,14 @@ import ecs100.*;
  * Stores food in orders
  *
  * @author Harry Booth-Beach
- * @version 2/09/2021
+ * @version 19/10/2021
  */
 public class Orders
 {
     // instance variables - replace the example below with your own
     private HashMap<Integer, Food> foodMap;
     private HashMap<Integer, Food> orderMap;
-    private int orderId = 0;
+    private int orderId = 1;
     
     /**
      * Constructor for objects of class Orders
@@ -54,16 +54,16 @@ public class Orders
     /**
      * Add food to order
      */
-    public void addFood(Food name, double price)
+    public void addFood(Food selectedFood)
     {
+        orderMap.put(orderId, selectedFood);
         orderId++;
-        orderMap.put(orderId, name);
     }
-    
+
     /**
-     * Return food to GUI
+     * See what food is selected
      */
-    public Food returnFood(int id)
+    public Food getFood(int id)
     {
         return foodMap.get(id);
     }
