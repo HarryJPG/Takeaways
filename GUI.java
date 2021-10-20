@@ -10,6 +10,8 @@ public class GUI
 {
     private Orders od;
     private Food fd;
+    private int orderLength = 0;
+    private String orderName = "unnamed";
     private boolean foodMenuOpen = false;
     private boolean sidesMenuOpen = false;
     private boolean drinksMenuOpen = false;
@@ -30,7 +32,8 @@ public class GUI
         // initialise instance variables
         od = new Orders();
         UI.initialise();
-
+        UI.addTextField("Name for order", this::getName);
+        UI.addButton("End Order", this::orderSummary);
         UI.setMouseListener(this::doMouse);
         menu();
     }
@@ -59,7 +62,7 @@ public class GUI
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX1_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
-                fd = od.getFood(i);
+                fd = od.getMenuFood(i);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX1_X, TEXT_Y + BOX_HEIGHT*i);
             }
             foodMenuOpen = true;
@@ -84,7 +87,7 @@ public class GUI
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX2_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
-                fd = od.getFood(i+4);
+                fd = od.getMenuFood(i+4);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX2_X, TEXT_Y + BOX_HEIGHT*i);
             }
             sidesMenuOpen = true;
@@ -109,7 +112,7 @@ public class GUI
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX3_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
-                fd = od.getFood(i+8);
+                fd = od.getMenuFood(i+8);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX3_X, TEXT_Y + BOX_HEIGHT*i);
             }
             drinksMenuOpen = true;
@@ -121,6 +124,45 @@ public class GUI
             UI.setColor(Color.black);
             drinksMenuOpen = false;
         }
+    }
+    
+    /**
+     * Add food to order
+     */
+    public void addFood()
+    {
+        int quantity = UI.askInt("How many " + fd.getFoodName() + "(s)? ");
+        while (quantity != 0)
+            {
+                quantity--;
+                od.addFood(fd);
+                orderLength++;
+            }
+    }
+    
+    /**
+     * Print all list items and total cost
+     */
+    public void orderSummary()
+    {
+        double totalCost = 0;
+        UI.println("Your order is: ");
+        for (int i = 1; i <= orderLength; i++)
+        {
+            fd = od.getOrderFood(i);
+            UI.println(fd.getFoodName());
+            totalCost += fd.getPrice();
+        }
+        UI.println("Your name for the order is: " + orderName);
+        UI.println("The total cost of your order is: $" + totalCost);
+    }
+    
+    /**
+     * Get the name for the order
+     */
+    public void getName(String name)
+    {
+        orderName = name;
     }
     
     /**
@@ -161,14 +203,8 @@ public class GUI
                         (y >= BOX_Y + BOX_HEIGHT) &&
                         (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
                     {
-                        fd = od.getFood(i);
-                        int quantity = UI.askInt("How many " + fd.getFoodName() + "? ");
-                        while (quantity != 0)
-                        {
-                            quantity--;
-                            od.addFood(fd);
-                            UI.println(fd.getFoodName());
-                        }
+                        fd = od.getMenuFood(i);
+                        this.addFood();
                         break;
                     }
                 }
@@ -180,14 +216,8 @@ public class GUI
                         (y >= BOX_Y + BOX_HEIGHT) &&
                         (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
                     {
-                        fd = od.getFood(i+4);
-                        int quantity = UI.askInt("How many " + fd.getFoodName() + "? ");
-                        while (quantity != 0)
-                        {
-                            quantity--;
-                            od.addFood(fd);
-                            UI.println(fd.getFoodName());
-                        }
+                        fd = od.getMenuFood(i+4);
+                        this.addFood();
                         break;
                     }
                 }
@@ -199,14 +229,8 @@ public class GUI
                         (y >= BOX_Y + BOX_HEIGHT) &&
                         (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
                     {
-                        fd = od.getFood(i+8);
-                        int quantity = UI.askInt("How many " + fd.getFoodName() + "? ");
-                        while (quantity != 0)
-                        {
-                            quantity--;
-                            od.addFood(fd);
-                            UI.println(fd.getFoodName());
-                        }
+                        fd = od.getMenuFood(i+8);
+                        this.addFood();
                         break;
                     }
                 }

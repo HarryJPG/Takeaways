@@ -61,10 +61,18 @@ public class Orders
     }
 
     /**
-     * See what food is selected
+     * Return food in menu
      */
-    public Food getFood(int id)
+    public Food getMenuFood(int id)
     {
         return foodMap.get(id);
+    }
+    
+    /**
+     * See what food is in order
+     */
+    public Food getOrderFood(int id)
+    {
+        return orderMap.get(id);
     }
 }
