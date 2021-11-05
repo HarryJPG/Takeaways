@@ -4,14 +4,14 @@ import java.awt.Color;
  * GUI for takeaways orders
  *
  * @author Harry Booth-Beach
- * @version 19/10/2021
+ * @version 21/10/2021
  */
 public class GUI
 {
     private Orders od;
     private Food fd;
     private int orderLength = 0;
-    private String orderName = "unnamed";
+    private String orderName = "";
     private boolean foodMenuOpen = false;
     private boolean sidesMenuOpen = false;
     private boolean drinksMenuOpen = false;
@@ -132,12 +132,20 @@ public class GUI
     public void addFood()
     {
         int quantity = UI.askInt("How many " + fd.getFoodName() + "(s)? ");
-        while (quantity != 0)
-            {
-                quantity--;
-                od.addFood(fd);
-                orderLength++;
-            }
+        if (quantity > 0 && quantity < 10)
+        {
+            while (quantity != 0)
+                {
+                    quantity--;
+                    od.addFood(fd);
+                    orderLength++;
+                }
+        }
+        else
+        {
+            UI.println("Please input a valid number (1-9)");
+            addFood();
+        }
     }
     
     /**
@@ -145,16 +153,43 @@ public class GUI
      */
     public void orderSummary()
     {
-        double totalCost = 0;
-        UI.println("Your order is: ");
-        for (int i = 1; i <= orderLength; i++)
+        if (orderName == "")
         {
-            fd = od.getOrderFood(i);
-            UI.println(fd.getFoodName());
-            totalCost += fd.getPrice();
+            UI.println("Please input a name for the order");
         }
-        UI.println("Your name for the order is: " + orderName);
-        UI.println("The total cost of your order is: $" + totalCost);
+        else if (orderName.length() > 30)
+        {
+            UI.println("Please input a name 30 or less characters");
+        }
+        else
+        {
+            double totalCost = 0;
+            int orderRecieve = 0;
+            String orderOption;
+            while (orderRecieve != 1 && orderRecieve != 2)
+            {
+                orderRecieve = UI.askInt
+                ("Pick up(1) or deliver(2)? ");
+            }
+            if (orderRecieve == 1)
+            {
+                orderOption = "is to be picked up";
+            }
+            else
+            {
+                orderOption = "will be delivered to you";
+            }
+            UI.println("Your order is: ");
+            for (int i = 1; i <= orderLength; i++)
+            {
+                fd = od.getOrderFood(i);
+                UI.println(fd.getFoodName());
+                totalCost += fd.getPrice();
+            }
+            UI.println("Your name for the order is: " + orderName);
+            UI.println("You order " + orderOption);
+            UI.println("The total cost of your order is: $" + totalCost + "0");
+        }
     }
     
     /**
@@ -196,42 +231,51 @@ public class GUI
                 }
                 
                 // add clicked food to list
-                for (int i = 1; i <= 4; i++)
+                if (foodMenuOpen == true)
                 {
-                    if ((x >= BOX1_X) &&
-                        (x <= BOX1_X + BOX_WIDTH) &&
-                        (y >= BOX_Y + BOX_HEIGHT) &&
-                        (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
+                    for (int i = 1; i <= 4; i++)
                     {
-                        fd = od.getMenuFood(i);
-                        this.addFood();
-                        break;
+                        if ((x >= BOX1_X) &&
+                            (x <= BOX1_X + BOX_WIDTH) &&
+                            (y >= BOX_Y + BOX_HEIGHT) &&
+                            (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
+                        {
+                            fd = od.getMenuFood(i);
+                            this.addFood();
+                            break;
+                        }
                     }
                 }
                 
-                for (int i = 1; i <= 4; i++)
+                if (sidesMenuOpen == true)
                 {
-                    if ((x >= BOX2_X) &&
-                        (x <= BOX2_X + BOX_WIDTH) &&
-                        (y >= BOX_Y + BOX_HEIGHT) &&
-                        (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
+                    for (int i = 1; i <= 4; i++)
                     {
-                        fd = od.getMenuFood(i+4);
-                        this.addFood();
-                        break;
+                        if ((x >= BOX2_X) &&
+                            (x <= BOX2_X + BOX_WIDTH) &&
+                            (y >= BOX_Y + BOX_HEIGHT) &&
+                            (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
+                        {
+                            fd = od.getMenuFood(i+4);
+                            this.addFood();
+                            break;
+                        }
                     }
                 }
                 
-                for (int i = 1; i <= 4; i++)
+                if (drinksMenuOpen == true)
                 {
-                    if ((x >= BOX3_X) &&
-                        (x <= BOX3_X + BOX_WIDTH) &&
-                        (y >= BOX_Y + BOX_HEIGHT) &&
-                        (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
+                    for (int i = 1; i <= 4; i++)
                     {
-                        fd = od.getMenuFood(i+8);
-                        this.addFood();
-                        break;
+                        if ((x >= BOX3_X) &&
+                            (x <= BOX3_X + BOX_WIDTH) &&
+                            (y >= BOX_Y + BOX_HEIGHT) &&
+                            (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
+                        {
+                            fd = od.getMenuFood(i+8);
+                            this.addFood();
+                            break;
+                        }
                     }
                 }
             }
