@@ -16,7 +16,7 @@ public class GUI
     private boolean sidesMenuOpen = false;
     private boolean drinksMenuOpen = false;
     static final double BOX_WIDTH = 120;
-    static final double BOX_HEIGHT = 40;
+    static final double BOX_HEIGHT = 60;
     static final double BOX1_X = 50;
     static final double BOX2_X = BOX1_X + BOX_WIDTH + 20;
     static final double BOX3_X = BOX1_X + 2*BOX_WIDTH + 40;
@@ -64,6 +64,8 @@ public class GUI
                 UI.drawRect(BOX1_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
                 fd = od.getMenuFood(i);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX1_X, TEXT_Y + BOX_HEIGHT*i);
+                String displayPrice = String.valueOf(fd.getPrice());
+                UI.drawString("$" + displayPrice + "0", TEXT2_X + BOX1_X, TEXT_Y + 20 + BOX_HEIGHT*i);
             }
             foodMenuOpen = true;
         }
@@ -89,6 +91,8 @@ public class GUI
                 UI.drawRect(BOX2_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
                 fd = od.getMenuFood(i+4);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX2_X, TEXT_Y + BOX_HEIGHT*i);
+                String displayPrice = String.valueOf(fd.getPrice());
+                UI.drawString("$" + displayPrice + "0", TEXT2_X + BOX2_X, TEXT_Y + 20 + BOX_HEIGHT*i);
             }
             sidesMenuOpen = true;
         }
@@ -114,6 +118,8 @@ public class GUI
                 UI.drawRect(BOX3_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
                 fd = od.getMenuFood(i+8);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX3_X, TEXT_Y + BOX_HEIGHT*i);
+                String displayPrice = String.valueOf(fd.getPrice());
+                UI.drawString("$" + displayPrice + "0", TEXT2_X + BOX3_X, TEXT_Y + 20 + BOX_HEIGHT*i);
             }
             drinksMenuOpen = true;
         }
