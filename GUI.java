@@ -26,6 +26,7 @@ public class GUI
     static final double TEXT_Y = BOX_Y + 25;
     static final int MENU_MIN = 1;
     static final int MENU_MAX = 4;
+    static final int MAX_ORDER_LEN = 30;
     /**
      * Constructor for objects of class GUI
      */
@@ -149,6 +150,11 @@ public class GUI
                     orderLength++;
                 }
         }
+        else if (orderLength + quantity > MAX_ORDER_LEN)
+        {
+            String displayMaxLen = String.valueOf(MAX_ORDER_LEN);
+            UI.println("Please do not order more than " + displayMaxLen + " food items");
+        }
         else
         {
             UI.println("Please input a valid number (1-9)");
@@ -171,32 +177,39 @@ public class GUI
         }
         else
         {
-            double totalCost = 0;
-            int orderRecieve = 0;
-            String orderOption;
-            while (orderRecieve != 1 && orderRecieve != 2)
+            if (orderLength == 0)
             {
-                orderRecieve = UI.askInt
-                ("Pick up(1) or deliver(2)? ");
-            }
-            if (orderRecieve == 1)
-            {
-                orderOption = "is to be picked up";
+                UI.println("You must add something to the order to finish.");
             }
             else
             {
-                orderOption = "will be delivered to you";
+                double totalCost = 0;
+                int orderRecieve = 0;
+                String orderOption;
+                while (orderRecieve != 1 && orderRecieve != 2)
+                {
+                    orderRecieve = UI.askInt
+                    ("Pick up(1) or deliver(2)? ");
+                }
+                if (orderRecieve == 1)
+                {
+                    orderOption = "is to be picked up";
+                }
+                else
+                {
+                    orderOption = "will be delivered to you";
+                }
+                UI.println("Your order is: ");
+                for (int i = MENU_MIN; i <= orderLength; i++)
+                {
+                    fd = od.getOrderFood(i);
+                    UI.println(fd.getFoodName());
+                    totalCost += fd.getPrice();
+                }
+                UI.println("Your name for the order is: " + orderName);
+                UI.println("You order " + orderOption);
+                UI.println("The total cost of your order is: $" + totalCost + "0");
             }
-            UI.println("Your order is: ");
-            for (int i = MENU_MIN; i <= orderLength; i++)
-            {
-                fd = od.getOrderFood(i);
-                UI.println(fd.getFoodName());
-                totalCost += fd.getPrice();
-            }
-            UI.println("Your name for the order is: " + orderName);
-            UI.println("You order " + orderOption);
-            UI.println("The total cost of your order is: $" + totalCost + "0");
         }
     }
     
