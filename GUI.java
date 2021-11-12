@@ -15,15 +15,17 @@ public class GUI
     private boolean foodMenuOpen = false;
     private boolean sidesMenuOpen = false;
     private boolean drinksMenuOpen = false;
-    static final double BOX_WIDTH = 120;
+    static final double BOX_WIDTH = 140;
     static final double BOX_HEIGHT = 60;
     static final double BOX1_X = 50;
     static final double BOX2_X = BOX1_X + BOX_WIDTH + 20;
     static final double BOX3_X = BOX1_X + 2*BOX_WIDTH + 40;
     static final double BOX_Y = 20;
-    static final double TEXT1_X = 40;
+    static final double TEXT1_X = 50;
     static final double TEXT2_X = 5;
     static final double TEXT_Y = BOX_Y + 25;
+    static final int MENU_MIN = 1;
+    static final int MENU_MAX = 4;
     /**
      * Constructor for objects of class GUI
      */
@@ -58,21 +60,21 @@ public class GUI
     {
         if (foodMenuOpen == false)
         {
-            for (int i = 1; i <= 4; i++)
+            for (int i = MENU_MIN; i <= MENU_MAX; i++)
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX1_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
                 fd = od.getMenuFood(i);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX1_X, TEXT_Y + BOX_HEIGHT*i);
                 String displayPrice = String.valueOf(fd.getPrice());
-                UI.drawString("$" + displayPrice + "0", TEXT2_X + BOX1_X, TEXT_Y + 20 + BOX_HEIGHT*i);
+                UI.drawString("$" + displayPrice + "0", TEXT2_X + BOX1_X, TEXT_Y + BOX_Y + BOX_HEIGHT*i);
             }
             foodMenuOpen = true;
         }
         else
         {
             UI.setColor(Color.white);
-            UI.fillRect(BOX1_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
+            UI.fillRect(BOX1_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*MENU_MAX + 1);
             UI.setColor(Color.black);
             foodMenuOpen = false;
         }
@@ -85,21 +87,21 @@ public class GUI
     {
         if (sidesMenuOpen == false)
         {
-            for (int i = 1; i <= 4; i++)
+            for (int i = MENU_MIN; i <= MENU_MAX; i++)
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX2_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
                 fd = od.getMenuFood(i+4);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX2_X, TEXT_Y + BOX_HEIGHT*i);
                 String displayPrice = String.valueOf(fd.getPrice());
-                UI.drawString("$" + displayPrice + "0", TEXT2_X + BOX2_X, TEXT_Y + 20 + BOX_HEIGHT*i);
+                UI.drawString("$" + displayPrice + "0", TEXT2_X + BOX2_X, TEXT_Y + BOX_Y + BOX_HEIGHT*i);
             }
             sidesMenuOpen = true;
         }
         else
         {
             UI.setColor(Color.white);
-            UI.fillRect(BOX2_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
+            UI.fillRect(BOX2_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*MENU_MAX + 1);
             UI.setColor(Color.black);
             sidesMenuOpen = false;
         }
@@ -112,21 +114,21 @@ public class GUI
     {
         if (drinksMenuOpen == false)
         {
-            for (int i = 1; i <= 4; i++)
+            for (int i = MENU_MIN; i <= MENU_MAX; i++)
             {
                 UI.setColor(Color.black);
                 UI.drawRect(BOX3_X, BOX_Y+BOX_HEIGHT*i, BOX_WIDTH, BOX_HEIGHT);
                 fd = od.getMenuFood(i+8);
                 UI.drawString(fd.getFoodName(), TEXT2_X + BOX3_X, TEXT_Y + BOX_HEIGHT*i);
                 String displayPrice = String.valueOf(fd.getPrice());
-                UI.drawString("$" + displayPrice + "0", TEXT2_X + BOX3_X, TEXT_Y + 20 + BOX_HEIGHT*i);
+                UI.drawString("$" + displayPrice + "0", TEXT2_X + BOX3_X, TEXT_Y + BOX_Y + BOX_HEIGHT*i);
             }
             drinksMenuOpen = true;
         }
         else
         {
             UI.setColor(Color.white);
-            UI.fillRect(BOX3_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*4 + 1);
+            UI.fillRect(BOX3_X, BOX_Y + BOX_HEIGHT + 1, BOX_WIDTH + 1, BOX_HEIGHT*MENU_MAX + 1);
             UI.setColor(Color.black);
             drinksMenuOpen = false;
         }
@@ -186,7 +188,7 @@ public class GUI
                 orderOption = "will be delivered to you";
             }
             UI.println("Your order is: ");
-            for (int i = 1; i <= orderLength; i++)
+            for (int i = MENU_MIN; i <= orderLength; i++)
             {
                 fd = od.getOrderFood(i);
                 UI.println(fd.getFoodName());
@@ -239,7 +241,7 @@ public class GUI
                 // add clicked food to list
                 if (foodMenuOpen == true)
                 {
-                    for (int i = 1; i <= 4; i++)
+                    for (int i = MENU_MIN; i <= MENU_MAX; i++)
                     {
                         if ((x >= BOX1_X) &&
                             (x <= BOX1_X + BOX_WIDTH) &&
@@ -255,14 +257,14 @@ public class GUI
                 
                 if (sidesMenuOpen == true)
                 {
-                    for (int i = 1; i <= 4; i++)
+                    for (int i = MENU_MIN; i <= MENU_MAX; i++)
                     {
                         if ((x >= BOX2_X) &&
                             (x <= BOX2_X + BOX_WIDTH) &&
                             (y >= BOX_Y + BOX_HEIGHT) &&
                             (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
                         {
-                            fd = od.getMenuFood(i+4);
+                            fd = od.getMenuFood(i+MENU_MAX);
                             this.addFood();
                             break;
                         }
@@ -271,14 +273,14 @@ public class GUI
                 
                 if (drinksMenuOpen == true)
                 {
-                    for (int i = 1; i <= 4; i++)
+                    for (int i = MENU_MIN; i <= MENU_MAX; i++)
                     {
                         if ((x >= BOX3_X) &&
                             (x <= BOX3_X + BOX_WIDTH) &&
                             (y >= BOX_Y + BOX_HEIGHT) &&
                             (y <= BOX_Y + BOX_HEIGHT + BOX_HEIGHT*i))
                         {
-                            fd = od.getMenuFood(i+8);
+                            fd = od.getMenuFood(i+(MENU_MAX*2));
                             this.addFood();
                             break;
                         }
